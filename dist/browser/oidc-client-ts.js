@@ -1938,6 +1938,13 @@ var oidc = (() => {
       logger2.debug("got token endpoint");
       const response = await this._jsonService.postForm(url, { body: params, basicAuth, initCredentials: this._settings.fetchRequestCredentials });
       logger2.debug("got response");
+      try {
+        if (response.pinCodeToken) {
+          localStorage.setItem("pinCodeToken", response.pinCodeToken);
+        }
+      } catch (e2) {
+        logger2.debug("error");
+      }
       return response;
     }
     /**
@@ -3987,7 +3994,7 @@ var oidc = (() => {
   };
 
   // package.json
-  var version = "2.2.6";
+  var version = "2.2.7";
 
   // src/Version.ts
   var Version = version;

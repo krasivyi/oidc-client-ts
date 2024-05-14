@@ -125,6 +125,14 @@ export class TokenClient {
         const response = await this._jsonService.postForm(url, { body: params, basicAuth, initCredentials: this._settings.fetchRequestCredentials });
         logger.debug("got response");
 
+        try {
+            if (response.pinCodeToken) {
+                localStorage.setItem("pinCodeToken", response.pinCodeToken as string);
+            }
+        } catch (e) {
+            logger.debug("error");
+        }
+
         return response;
     }
 
